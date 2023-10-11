@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: Re.Ex Api
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://re-ex-backend.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: login
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginrequest"
+                - example:
+                    email: brian@dummy.com
+                    password: sirikuu
+            example:
+              email: brian@dummy.com
+              password: sirikuu
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/registerrequest"
+                - example:
+                    name: Charity
+                    email: charity@dummy.com
+                    password: sirikuu
+            example:
+              name: Charity
+              email: charity@dummy.com
+              password: sirikuu
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /financials:
+    get:
+      tags:
+        - Financials
+      summary: get all financials
+      operationId: getallfinancials
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    post:
+      tags:
+        - Financials
+      summary: create financial
+      operationId: createfinancial
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/createfinancialrequest"
+                - example:
+                    name: uwanganis
+                    category: clothing
+                    description: nilifanya uwanganis
+                    type: expense
+                    amount: 4000000
+            example:
+              name: uwanganis
+              category: clothing
+              description: nilifanya uwanganis
+              type: expense
+              amount: 4000000
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /financials/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The financial ID
+    get:
+      tags:
+        - Financials
+      summary: get single financial
+      operationId: getsinglefinancial
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Financials
+      summary: update financial
+      operationId: updatefinancial
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/updatefinancialrequest"
+                - example:
+                    category: clothing
+                    description: bought black boots at Thursday
+                    amount: 15000
+                    type: expense
+            example:
+              category: clothing
+              description: bought black boots at Thursday
+              amount: 15000
+              type: expense
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Financials
+      summary: delete financial
+      operationId: deletefinancial
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    loginrequest:
+      title: loginrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: brian@dummy.com
+        password: sirikuu
+    registerrequest:
+      title: registerrequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Charity
+        email: charity@dummy.com
+        password: sirikuu
+    createfinancialrequest:
+      title: createfinancialrequest
+      required:
+        - name
+        - category
+        - description
+        - type
+        - amount
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        amount:
+          type: integer
+          format: int32
+      example:
+        name: uwanganis
+        category: clothing
+        description: nilifanya uwanganis
+        type: expense
+        amount: 4000000
+    updatefinancialrequest:
+      title: updatefinancialrequest
+      required:
+        - category
+        - description
+        - amount
+        - type
+      type: object
+      properties:
+        category:
+          type: string
+        description:
+          type: string
+        amount:
+          type: integer
+          format: int32
+        type:
+          type: string
+      example:
+        category: clothing
+        description: bought black boots at Thursday
+        amount: 15000
+        type: expense
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Financials
+    description: ""

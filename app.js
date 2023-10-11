@@ -11,6 +11,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDoc = YAML.load("./swagger.yaml");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -30,8 +33,11 @@ app.use(cors());
 app.use(xss());
 
 app.get("/", (req, res) => {
-  res.status(200).send("Re.Ex api");
+  res
+    .status(200)
+    .send("<h1>Re.Ex api</h1><a href='/api-docs'>Documentation</a>");
 });
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/financials", authenticateUser, financialRouter);
 app.use(notFound);
