@@ -20,6 +20,7 @@ const FinancialSchema = new Schema(
           "investment",
           "insurance",
           "wage",
+          "education",
         ],
         message: "{VALUE} is not supported",
       },
