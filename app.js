@@ -10,16 +10,21 @@ const authenticateUser = require("./middleware/authentication");
 const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/financials", authenticateUser, financialRouter);
+app.get("*", (_, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 

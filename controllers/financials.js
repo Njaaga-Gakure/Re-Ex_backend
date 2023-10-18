@@ -20,11 +20,11 @@ class Financials {
     // search
     if (search) {
       queryObj.name = {
-        $regex: search,
+        $regex: `^${search}`,
         $options: "i",
       };
     }
-
+    console.log(search);
     // category
     if (category && category !== "all") {
       queryObj.category = category;
@@ -49,7 +49,7 @@ class Financials {
     }
 
     // pagination
-    const pageNumber = page || 1;
+    const pageNumber = Number(page) || 1;
     const pageSize = 10;
     const skip = (pageNumber - 1) * pageSize;
 

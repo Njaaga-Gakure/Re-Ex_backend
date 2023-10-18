@@ -28,7 +28,7 @@ const FinancialSchema = new Schema(
     description: {
       type: String,
       required: [true, "Please provide a description"],
-      maxlength: 50,
+      maxlength: 100,
     },
     amount: {
       type: Number,
