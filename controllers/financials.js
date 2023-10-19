@@ -24,7 +24,7 @@ class Financials {
         $options: "i",
       };
     }
-    console.log(search);
+
     // category
     if (category && category !== "all") {
       queryObj.category = category;
